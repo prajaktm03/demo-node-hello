@@ -2,27 +2,23 @@ name: Deploy to Amazon ECS
 
 on:
   push:
-    branches: 
+    branches:
       - master
 
 env:
-  AWS_REGION: us-east-1  # Ensure your AWS region is here
+  AWS_REGION: us-east-1
   ECR_REPOSITORY: my-ecr-repository
   ECS_SERVICE: my-ecs-service
   ECS_CLUSTER: my-ecs-cluster
   ECS_TASK_DEFINITION: path/to/ecs-task-definition.json
   CONTAINER_NAME: my-container
 
-permissions:
-  contents: read
-
 jobs:
   deploy:
-    name: Deploy
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout
       uses: actions/checkout@v4
 
     - name: Configure AWS credentials
@@ -30,13 +26,11 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.AWS_REGION }}  # Ensure this is set
+        aws-region: ${{ env.AWS_REGION }}
 
     - name: Login to Amazon ECR
       id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1.0.0
-      env:
-        AWS_REGION: ${{ env.AWS_REGION }}  # Pass the region explicitly here
+      uses: aws-actions/amazon-ecr-login@v1
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
