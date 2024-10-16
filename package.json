@@ -11,6 +11,10 @@
     "url": "git+https://github.com/prajaktm03/demo-node-hello.git"
     
   },
+  "scripts": {
+  "start": "node index.js",
+  "build": "echo 'No build step defined'"
+}
   "keywords": [],
   "author": "",
   "license": "ISC",
