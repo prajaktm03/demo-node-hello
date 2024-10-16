@@ -6,7 +6,7 @@ on:
       - master
 
 env:
-  AWS_REGION: us-east-1  # Set your AWS region here
+  AWS_REGION: us-east-1  # Ensure your AWS region is here
   ECR_REPOSITORY: my-ecr-repository
   ECS_SERVICE: my-ecs-service
   ECS_CLUSTER: my-ecs-cluster
@@ -30,13 +30,13 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ${{ env.AWS_REGION }}  # Ensure this step has the region
+        aws-region: ${{ env.AWS_REGION }}  # Ensure this is set
 
     - name: Login to Amazon ECR
       id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
-      with:
-        region: ${{ env.AWS_REGION }}  # Explicitly pass the region here
+      uses: aws-actions/amazon-ecr-login@v1.0.0
+      env:
+        AWS_REGION: ${{ env.AWS_REGION }}  # Pass the region explicitly here
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
